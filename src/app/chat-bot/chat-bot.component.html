@@ -1,0 +1,64 @@
+
+
+
+<ngx-spinner size="medium" type="ball-spin"></ngx-spinner>
+<section id="sidebar">
+  <div class="sidebar">
+    <a  class="logo">
+      <i class='bx bx-body'></i>
+      <div class="logo-name" ><span>Chat</span>Bot</div>
+    </a>
+
+    <ul class="side-menu">
+      <li class="active" ><a routerLink="/home/chatbot"><i class='bx bx-paper-plane'></i>Dashboard</a></li>
+      <li ><a routerLink="/home/chatbot"><i class='bx bxs-map-alt'></i>Ask Questions</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <nav>
+      <i class='bx bx-menu'></i>
+      <form>
+        <div class="form-input">
+        </div>
+      </form>
+
+      <a class="cambridgeLogo"><img src="assets/chs-logo.png"></a>
+      <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
+        <a class="profile">
+          <img src="assets/avatar.avif" alt="avatar Logo">
+        </a>
+      </button>
+
+      <mat-menu class="customMenu" #menu="matMenu">
+        <button mat-menu-item >
+          <mat-icon style="color: darkred">accessibility_new</mat-icon>
+          <span style="color: darkred">{{authenticationService.userName}}</span>
+        </button>
+
+        <button mat-menu-item >
+          <mat-icon style="color: lightseagreen"> vpn_key</mat-icon>
+          <span style="color: lightseagreen" (click)="isLoggedOut()">Logout</span>
+        </button>
+      </mat-menu>
+    </nav><br>
+
+
+          <div class="chat-container">
+            <ul>
+              <li *ngFor="let message of messageList" [@messageState]="''">
+                <div *ngIf="message.user && message.user !== 'Hey'" style="float: left;background-color: lightblue; border-radius: 25px;padding: 5% 5% 5% 5%;font-size: small"><i class='bx bx-user'></i> {{ message.user }}</div>
+                <div *ngIf="message.bot" style="float: right;background-color: lightpink; border-radius: 25px;padding: 5% 5% 5% 5%;;font-size: small"><i class='bx bxs-bot'></i> {{ message.bot }}</div>
+              </li>
+            </ul>
+            <div class="input-container">
+              <input type="text" [(ngModel)]="userInput" class="user-input" [disabled]='isDisabled' placeholder="Enter your query here.." (keyup.enter)="sendMessages()">
+              <button mat-mini-fab color="accent" class="send-button" [disabled]='isDisabled' (click)="sendMessages()"><mat-icon>send</mat-icon></button>
+            </div>
+          </div><br><br>
+<!--        </div></div>-->
+<!--      <br>-->
+<!--    </main>-->
+  </div>
+</section>
+

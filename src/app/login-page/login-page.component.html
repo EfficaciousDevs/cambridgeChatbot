@@ -1,0 +1,33 @@
+
+<ngx-spinner size="medium" type="ball-atom"></ngx-spinner>
+<div class="container">
+  <div class="forms-container">
+
+    <div class="signin-signup">
+      <form class="sign-in-form">
+        <img src="https://www.chsonline.org.uk/wp-content/uploads/chs-logo.jpg" alt="AcxiomLogo"
+             style="width: 50%;margin-bottom: 10%">
+        <h2 class="title">Sign in</h2>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Username" [(ngModel)]="username"
+                 [ngModelOptions]="{standalone: true}"  (ngModelChange)="invalidChange()"/>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password"
+                 [(ngModel)]="password" [ngModelOptions]="{standalone: true}" (ngModelChange)="invalidChange()"/>
+        </div>
+        <button type="submit" class="btn solid" (click)="loginHelper()">Login</button>
+        <h4 *ngIf="invalidCredentials.length>0" style="color: crimson">{{invalidCredentials}}</h4>
+        <!--        <a (click)="signupPage()" style="cursor: pointer; color: crimson; font-weight: bolder">SIGNUP PAGE?</a>-->
+      </form>
+    </div>
+  </div>
+
+  <div class="panels-container">
+    <div class="panel left-panel">
+      <img src="./assets/chatLoginAvatar.png" alt="Privacy-Login" class="image">
+    </div>
+  </div>
+</div>

@@ -48,8 +48,6 @@ export class ChatBotComponent implements OnInit{
 
   ngOnInit() {
     this.spinner.show();
-    // this.sendMessages();
-
     const chatRequest =
       {
         "query": this.messageList[this.messageList.length - 1].user,
@@ -64,8 +62,8 @@ export class ChatBotComponent implements OnInit{
 
     this.http.post('http://52.172.252.7:5010/chat', chatRequest)
       .subscribe((chatResponse: any) => {
-        this.messageList.push({user: '', bot: chatResponse?.response});
         this.audioFile.play();
+        this.messageList.push({user: '', bot: chatResponse?.response});
         this.predClass = chatResponse.predClass;
         this.flagKey = chatResponse.flag_;
         this.responseFlag = chatResponse.responseFlag;
@@ -92,9 +90,36 @@ export class ChatBotComponent implements OnInit{
   contactNo: number = 0;
   userName: string = '';
   responseFlag: boolean = false;
-  // questionFlag: string = '';
-  // responseData: any;
 
+
+  resetChatMessages(){
+    this.spinner.show();
+    this.messageList = [];
+    this.messageList = [{user:'Hey',bot: ''}];
+
+    const chatRequest =
+      {
+        "query": this.messageList[this.messageList.length - 1].user,
+        "flag_": this.flagKey,
+        "predClass": this.predClass,
+        "responseFlag": this.responseFlag,
+        "q1sales": this.q1Sales,
+        "contact": this.contactNo,
+        "name": this.userName,
+        "q1personal": this.q1Personal
+      }
+
+    this.http.post('http://52.172.252.7:5010/chat', chatRequest)
+      .subscribe((chatResponse: any) => {
+        this.audioFile.play();
+        this.messageList.push({user: '', bot: chatResponse?.response});
+        this.predClass = chatResponse.predClass;
+        this.flagKey = chatResponse.flag_;
+        this.responseFlag = chatResponse.responseFlag;
+        this.spinner.hide();
+      });
+
+  }
   sendMessages() {
     if (this.userInput) {
       this.isDisabled = true;
@@ -112,18 +137,17 @@ export class ChatBotComponent implements OnInit{
               "contact": this.contactNo,
               "name": this.userName,
               "q1personal": this.q1Personal
-              // "questionFlag": this.questionFlag
             }
 
           this.http.post('http://52.172.252.7:5010/chat', chatRequest)
             .subscribe((chatResponse: any) => {
-              this.messageList.push({user: '', bot: chatResponse?.response});
               this.audioFile.play();
+              this.messageList.push({user: '', bot: chatResponse?.response});
+
               this.predClass = chatResponse.predClass;
               this.flagKey = chatResponse.flag_;
               this.responseFlag = chatResponse.responseFlag;
               this.isDisabled = false;
-              // this.responseData = chatResponse;
             });
         } else {
           if (this.predClass == 'sales lead') {
@@ -131,10 +155,6 @@ export class ChatBotComponent implements OnInit{
           } else if (this.predClass == 'personal') {
             this.q1Personal = this.messageList[2]?.user;
           }
-
-          // if(this.responseData.flag_.length < 1){
-          //   this.questionFlag = this.messageList[this.messageList.length - 1]?.user;
-          // }
 
           const chatRequest =
             {
@@ -146,7 +166,6 @@ export class ChatBotComponent implements OnInit{
               "contact": this.contactNo,
               "name": this.userName,
               "q1personal": this.q1Personal
-              // "questionFlag": this.questionFlag
             }
 
 
@@ -169,4 +188,4 @@ export class ChatBotComponent implements OnInit{
   isLoggedOut(){
     this.router.navigate(['/login']);
   }
-  }
+}

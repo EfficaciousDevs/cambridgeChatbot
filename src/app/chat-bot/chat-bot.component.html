@@ -1,6 +1,3 @@
-
-
-
 <ngx-spinner size="medium" type="ball-spin"></ngx-spinner>
 <section id="sidebar">
   <div class="sidebar">
@@ -45,6 +42,7 @@
 
 
           <div class="chat-container">
+            <button mat-icon-button color="primary" matTooltip="Clear chat" matTooltipPosition="right" (click)="resetChatMessages()"><mat-icon>restore</mat-icon></button>
             <ul>
               <li *ngFor="let message of messageList" [@messageState]="''">
                 <div *ngIf="message.user && message.user !== 'Hey'" style="float: left;background-color: lightblue; border-radius: 25px;padding: 5% 5% 5% 5%;font-size: small"><i class='bx bx-user'></i> {{ message.user }}</div>
@@ -53,7 +51,7 @@
             </ul>
             <div class="input-container">
               <input type="text" [(ngModel)]="userInput" class="user-input" [disabled]='isDisabled' placeholder="Enter your query here.." (keyup.enter)="sendMessages()">
-              <button mat-mini-fab color="accent" class="send-button" [disabled]='isDisabled' (click)="sendMessages()"><mat-icon>send</mat-icon></button>
+              <button mat-mini-fab color="accent" class="send-button" matTooltip="Send" matTooltipPosition="right" [disabled]='isDisabled' (click)="sendMessages()"><mat-icon>send</mat-icon></button>
             </div>
           </div><br><br>
 <!--        </div></div>-->
